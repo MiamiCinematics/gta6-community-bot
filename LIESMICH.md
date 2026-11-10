@@ -42,7 +42,9 @@ Rockstar und du postet auch auf X, Instagram und TikTok. Diese Plattformen haben
 { "name": "Rockstar Games", "platform": "X", "type": "rockstar", "url": "https://..." }
 ```
 
-`type` ist `rockstar` oder `own` (deine eigenen Posts).
+`type` ist `rockstar` oder `own` (deine eigenen Posts). `name` muss genau gleich sein wie beim YouTube-Feed desselben Accounts.
+
+**Doppelte vermeiden:** Posts von X, Instagram und TikTok wartet der Bot erst 60 Minuten ab (`holdMinutes`). Erscheint in der Zeit (oder in den 7 Tagen davor) dasselbe auf YouTube, also ein Video mit ähnlichem Titel vom selben Account, postet er nur den YouTube-Link. Sonst postet er den Beitrag ganz normal.
 
 ## Memes anpassen
 `memes.json`: jede Zeile ist ein Meme (`template` = Vorlage von memegen.link, `text` = Textzeilen). `"phase": "pre"` = nur vor dem Release (19.11.2026), `"post"` = erst danach. Pro Tag werden 3 mit verschiedenen Vorlagen gewählt, Wiederholungen erst, wenn fast alle dran waren.

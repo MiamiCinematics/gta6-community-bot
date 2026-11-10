@@ -28,6 +28,8 @@ const state = existsSync(STATE_FILE)
   : {};
 state.feeds ??= {};
 state.usedMemes ??= [];
+state.recentYt ??= [];
+state.pending ??= [];
 
 const log = (...a) => console.log(new Date().toISOString(), ...a);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -124,6 +126,38 @@ function parseFeed(xml) {
   }).filter((e) => e.id && e.link);
 }
 
+const isYouTube = (feed) => /youtube/i.test(feed.platform);
+
+// Titel vergleichen ohne Hashtags, Links, Emojis und Gross/Klein; aehnlich = mind. halbe Wortueberschneidung
+function words(t = "") {
+  return new Set(
+    t.toLowerCase()
+      .replace(/https?:\/\/\S+/g, " ")
+      .replace(/#\w+/g, " ")
+      .replace(/[^\p{L}\p{N}\s]/gu, " ")
+      .split(/\s+/)
+      .filter((w) => w.length > 2)
+  );
+}
+function similar(a, b) {
+  const A = words(a), B = words(b);
+  if (!A.size || !B.size) return false;
+  let common = 0;
+  for (const w of A) if (B.has(w)) common++;
+  return common >= 2 && common / Math.min(A.size, B.size) >= 0.5;
+}
+
+if (process.argv.includes("--selftest")) {
+  const cases = [
+    ["24 Years After Vice City, We're Going Back #gta6 #shorts", "24 years after Vice City, we're going back 🌴 #gta #fyp", true],
+    ["GTA 6 Preload Is Live🔥Is Your Console Ready?  #gta6 #gta #shorts", "Preload is live! Is your console ready? #gta6", true],
+    ["Grand Theft Auto VI Launch Trailer", "Pre-orders for the Collector's Edition are now open", false],
+    ["A Night in Vice City", "GTA 6 is coming #gta", false],
+  ];
+  for (const [a, b, want] of cases) console.log(similar(a, b) === want ? "OK  " : "FAIL", a, "|", b);
+  process.exit(0);
+}
+
 async function checkFeeds(channels) {
   const posts = [];
   for (const feed of config.feeds) {
@@ -151,9 +185,30 @@ async function checkFeeds(channels) {
       continue;
     }
     const fresh = items.filter((i) => !seen.includes(i.id)).slice(0, 3).reverse();
-    for (const item of fresh) posts.push({ feed, item });
+    for (const item of fresh) {
+      if (isYouTube(feed)) {
+        posts.push({ feed, item });
+        state.recentYt.push({ name: feed.name, title: item.title, at: Date.now() });
+      } else {
+        // X/Instagram/TikTok erst merken: kommt dasselbe noch auf YouTube, wird nur YouTube gepostet
+        state.pending.push({ feed, item, firstSeen: Date.now() });
+      }
+    }
     state.feeds[feed.url] = [...fresh.map((i) => i.id), ...seen].slice(0, 50);
   }
+
+  // Doppelte vermeiden: YouTube hat Vorrang vor X, Instagram und TikTok
+  const week = 7 * 24 * 3600 * 1000;
+  state.recentYt = state.recentYt.filter((y) => Date.now() - y.at < week);
+  const hold = (config.holdMinutes ?? 60) * 60 * 1000;
+  const keep = [];
+  for (const p of state.pending) {
+    const dup = state.recentYt.find((y) => y.name === p.feed.name && similar(y.title, p.item.title));
+    if (dup) { log(`Uebersprungen (gibt es auf YouTube): ${p.feed.name} ${p.feed.platform} - ${p.item.title}`); continue; }
+    if (DRY || Date.now() - p.firstSeen >= hold) posts.push(p);
+    else keep.push(p);
+  }
+  state.pending = keep;
 
   for (const { feed, item } of posts) {
     const text = (feed.type === "own" ? config.messages.own : config.messages.rockstar)
