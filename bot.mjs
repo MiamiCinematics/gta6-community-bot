@@ -22,6 +22,8 @@ const TEST_MEMES = process.argv.includes("--test-memes");
 
 const config = JSON.parse(await readFile(join(DIR, "config.json"), "utf8"));
 const memePool = JSON.parse(await readFile(join(DIR, "memes.json"), "utf8"));
+const polls = JSON.parse(await readFile(join(DIR, "polls.json"), "utf8"));
+const discussions = JSON.parse(await readFile(join(DIR, "discussions.json"), "utf8"));
 const STATE_FILE = join(DIR, "state.json");
 const state = existsSync(STATE_FILE)
   ? JSON.parse(await readFile(STATE_FILE, "utf8"))
@@ -275,20 +277,41 @@ function berlinNow() {
   const parts = Object.fromEntries(
     new Intl.DateTimeFormat("en-CA", {
       timeZone: config.timezone, year: "numeric", month: "2-digit", day: "2-digit",
-      hour: "2-digit", hour12: false,
+      hour: "2-digit", hour12: false, weekday: "short",
     }).formatToParts(new Date()).map((p) => [p.type, p.value])
   );
-  return { date: `${parts.year}-${parts.month}-${parts.day}`, hour: +parts.hour % 24 };
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, hour: +parts.hour % 24, weekday: parts.weekday };
 }
+
+const released = () => berlinNow().date >= config.releaseDate;
+const fitsPhase = (x) => !x.phase || (x.phase === "post" ? released() : !released());
+
+// Einen Eintrag waehlen, der zuletzt nicht dran war (fuer Umfragen und Diskussionen)
+function pickOne(pool, usedKey) {
+  state[usedKey] ??= [];
+  const fits = pool.map((_, i) => i).filter((i) => fitsPhase(pool[i]));
+  let free = fits.filter((i) => !state[usedKey].includes(i));
+  if (!free.length) { state[usedKey] = []; free = fits; }
+  const i = free[Math.floor(Math.random() * free.length)];
+  state[usedKey].push(i);
+  return pool[i];
+}
+
+// Taeglich/woechentlich: true, wenn heute (bzw. diese Woche) noch nicht gelaufen und die Uhrzeit erreicht ist
+function due(job) {
+  const { date, hour, weekday } = berlinNow();
+  const s = config.schedule[job];
+  state.jobs ??= {};
+  if (state.jobs[job] === date || hour < s.hour) return false;
+  if (s.weekday && s.weekday !== weekday) return false;
+  return true;
+}
+const markDone = (job) => { state.jobs[job] = berlinNow().date; };
 
 // 3 Memes waehlen, die zuletzt nicht dran waren, mit 3 verschiedenen Vorlagen
 // phase "pre" = nur vor Release, "post" = nur ab Release, ohne = immer
 function pickMemes(n) {
-  const released = berlinNow().date >= config.releaseDate;
-  const fits = memePool.map((_, i) => i).filter((i) => {
-    const p = memePool[i].phase;
-    return !p || (p === "post" ? released : !released);
-  });
+  const fits = memePool.map((_, i) => i).filter((i) => fitsPhase(memePool[i]));
   let free = fits.filter((i) => !state.usedMemes.includes(i));
   if (free.length < n * 2) { state.usedMemes = []; free = fits; }
   free.sort(() => Math.random() - 0.5);
@@ -343,6 +366,79 @@ async function dailyMemes(channels) {
   log(`${memes.length} Memes gepostet.`);
 }
 
+// ---------------------------------------------------------------- Umfrage, Diskussion, Clips, Meilensteine
+
+async function dailyPoll(channels) {
+  if (!DRY && !due("poll")) return;
+  const p = pickOne(polls, "usedPolls");
+  if (DRY) { log("[dry] Umfrage:", p.q, "|", p.a.join(" / ")); return; }
+  const ch = pickChannel(channels, "welcome");
+  if (!ch) { log("Kein General-Channel fuer die Umfrage gefunden."); return; }
+  await sendMessage(ch, {
+    poll: {
+      question: { text: p.q },
+      answers: p.a.map((text) => ({ poll_media: { text } })),
+      duration: 24,
+      allow_multiselect: false,
+    },
+  });
+  markDone("poll");
+  log("Umfrage gepostet:", p.q);
+}
+
+// Thema des Tages: aus today.json (z. B. von der Tagesanalyse), sonst aus discussions.json
+async function dailyDiscussion(channels) {
+  if (!DRY && !due("discussion")) return;
+  let topic;
+  const todayFile = join(DIR, "today.json");
+  if (existsSync(todayFile)) {
+    const t = JSON.parse(await readFile(todayFile, "utf8"));
+    if (t.date === berlinNow().date && t.discussion?.title) topic = t.discussion;
+  }
+  topic ??= pickOne(discussions, "usedDiscussions");
+  const text = config.messages.discussion
+    .replaceAll("{title}", topic.title)
+    .replaceAll("{text}", topic.text)
+    + (topic.source ? `\nSource: ${topic.source}` : "");
+  if (DRY) { log("[dry] Diskussion:\n" + text); return; }
+  const ch = pickChannel(channels, "discussion");
+  if (!ch) { log("Kein Leaks-and-Speculations-Channel gefunden."); return; }
+  const msg = await sendMessage(ch, { content: text });
+  try {
+    await discord("POST", `/channels/${ch}/messages/${msg.id}/threads`, {
+      name: topic.title.slice(0, 100), auto_archive_duration: 1440,
+    });
+  } catch (e) {
+    log("Thread konnte nicht erstellt werden (Recht 'Create Public Threads' fehlt?):", e.status);
+  }
+  markDone("discussion");
+  log("Diskussion gestartet:", topic.title);
+}
+
+async function weeklyClipCall(channels) {
+  if (!DRY && !due("clipCall")) return;
+  const text = config.messages.clipCall;
+  if (DRY) { log("[dry] Clip-Aufruf:\n" + text); return; }
+  const ch = pickChannel(channels, "clips");
+  if (!ch) { log("Kein Clips-Channel gefunden."); return; }
+  await sendMessage(ch, { content: text });
+  markDone("clipCall");
+  log("Clip-Aufruf gepostet.");
+}
+
+async function milestones(guildId, channels) {
+  const g = await discord("GET", `/guilds/${guildId}?with_counts=true`);
+  const count = g.approximate_member_count ?? 0;
+  const reached = config.milestones.filter((m) => count >= m).pop() ?? 0;
+  if (state.lastMilestone === undefined) { state.lastMilestone = reached; return; } // erster Lauf: nur merken
+  if (reached <= state.lastMilestone) return;
+  const ch = pickChannel(channels, "welcome");
+  if (!ch) return;
+  await sendMessage(ch, { content: config.messages.milestone.replaceAll("{count}", reached.toLocaleString("en-US")) });
+  state.lastMilestone = reached;
+  log("Meilenstein gepostet:", reached);
+}
+
 // ---------------------------------------------------------------- Ablauf
 
 async function main() {
@@ -350,6 +446,9 @@ async function main() {
   if (DRY) {
     await checkFeeds([]);
     await dailyMemes([]);
+    await dailyPoll([]);
+    await dailyDiscussion([]);
+    await weeklyClipCall([]);
     return; // im Testmodus wird state.json nicht gespeichert
   }
   if (!TOKEN) throw new Error("DISCORD_TOKEN fehlt (GitHub: Settings > Secrets > Actions).");
@@ -361,6 +460,10 @@ async function main() {
     ["Feeds", () => checkFeeds(channels)],
     ["Begruessung", () => welcomeMembers(guildId, channels)],
     ["Memes", () => dailyMemes(channels)],
+    ["Umfrage", () => dailyPoll(channels)],
+    ["Diskussion", () => dailyDiscussion(channels)],
+    ["Clip-Aufruf", () => weeklyClipCall(channels)],
+    ["Meilensteine", () => milestones(guildId, channels)],
   ];
   let failed = false;
   for (const [name, fn] of steps) {

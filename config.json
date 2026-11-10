@@ -6,6 +6,13 @@
   "releaseDate": "2026-11-19",
   "holdMinutes": 60,
 
+  "schedule": {
+    "poll": { "hour": 10 },
+    "discussion": { "hour": 15 },
+    "clipCall": { "hour": 18, "weekday": "Fri" }
+  },
+  "milestones": [25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000],
+
   "feeds": [
     {
       "name": "Rockstar Games",
@@ -25,14 +32,18 @@
     "rockstar": ["rockstar", "news", "announcement", "ankuendigung", "general"],
     "own": ["miami-cinematics", "uploads", "social", "content", "promo", "general"],
     "memes": ["meme"],
-    "welcome": ["general", "allgemein"]
+    "welcome": ["general", "allgemein"],
+    "discussion": ["leak", "speculation", "spekulation"],
+    "clips": ["clip", "general"]
   },
 
   "channelIds": {
     "rockstar": "",
     "own": "",
     "memes": "",
-    "welcome": ""
+    "welcome": "",
+    "discussion": "",
+    "clips": ""
   },
 
   "messages": {
@@ -44,6 +55,9 @@
       "{user} just pulled into Vice City. Welcome to the GTA 6 Community! Check the rules and make yourself at home.",
       "Welcome aboard, {user}! Grab a seat, share your best clips and enjoy the ride."
     ],
-    "welcomeMany": "Welcome to the GTA 6 Community, {users}! Vice City just got a lot busier."
+    "welcomeMany": "Welcome to the GTA 6 Community, {users}! Vice City just got a lot busier.",
+    "discussion": "**Topic of the day: {title}**\n{text}\n\nDrop your thoughts in the thread below. Speculation is welcome, but no leaked material, please.",
+    "clipCall": "**Weekly Clip Call**\nGot a crazy, funny or cinematic GTA moment from this week? Post it right here in this channel or send it through the form: https://forms.gle/42hLVhiQL14X5HaP7\nThe best clips may be featured in a Miami Cinematics Community Clips video.",
+    "milestone": "**We just hit {count} members!** Thanks for being part of the GTA 6 Community. Invite your crew and let's keep growing."
   }
 }

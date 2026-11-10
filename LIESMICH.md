@@ -8,6 +8,17 @@ Läuft komplett auf GitHub (GitHub Actions), dein PC kann aus sein. GitHub start
 | Deine Posts | YouTube-Feed von Miami Cinematics | spätestens ca. 15–30 Min. nach dem Post |
 | 3 Memes pro Tag | Texte aus `memes.json`, Bild über memegen.link (kostenlos) | ab 12 Uhr deutscher Zeit, einmal täglich |
 | Begrüßung | neue Mitglieder im General-Chat | spätestens ca. 15–30 Min. nach dem Beitritt |
+| Umfrage des Tages | Discord-Umfrage im General-Chat (24 h), Fragen aus `polls.json` | ab 10 Uhr |
+| Thema des Tages | Post + Thread im Leaks-and-Speculations-Channel, aus `today.json` (wenn für heute vorhanden) sonst `discussions.json` | ab 15 Uhr |
+| Clip-Aufruf | im Clips-Channel (sonst General), mit Clip-Formular | freitags ab 18 Uhr |
+| Meilensteine | Post im General-Chat bei 25, 50, 100, 250 … Mitgliedern | beim nächsten Lauf |
+
+Zusätzliche Rechte für den Bot (Servereinstellungen → Rollen → Bot-Rolle): `Create Polls`, `Create Public Threads`, `Send Messages in Threads`.
+
+`today.json` (optional, z. B. von der Tagesanalyse geschrieben):
+```json
+{ "date": "2026-11-11", "discussion": { "title": "…", "text": "…", "source": "Rockstar Newswire" } }
+```
 
 Alle Texte, die im Discord erscheinen, sind auf Englisch und stehen in `config.json` unter `messages`.
 
