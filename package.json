@@ -1,0 +1,11 @@
+{
+  "name": "gta6-community-bot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node bot.mjs",
+    "dry": "node bot.mjs --dry",
+    "test-memes": "node bot.mjs --test-memes"
+  },
+  "engines": { "node": ">=20" }
+}

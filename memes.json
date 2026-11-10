@@ -1,0 +1,71 @@
+[
+  { "template": "drake", "text": ["Touching grass", "Touching the GTA 6 preload button again"] },
+  { "template": "drake", "text": ["Saving money for rent", "Saving money for a bigger SSD for GTA 6"], "phase": "pre" },
+  { "template": "drake", "text": ["Following the mission marker", "Driving around Vice City for three hours first"] },
+  { "template": "drake", "text": ["Obeying traffic laws in real life", "Obeying traffic laws in Leonida for exactly 4 seconds"] },
+  { "template": "drake", "text": ["Sleeping 8 hours", "Sleeping 8 minutes because GTA 6 is out"], "phase": "post" },
+
+  { "template": "fine", "text": ["Wanted level: 5 stars", "This is fine"] },
+  { "template": "fine", "text": ["My weekend plans", "Cancelled for GTA 6"], "phase": "post" },
+
+  { "template": "gru", "text": ["Wait for GTA 6 since 2013", "Get a new console for it", "Clear the whole weekend", "Fall asleep in the loading screen"] },
+  { "template": "gru", "text": ["Buy a fast car in Vice City", "Tune it to the max", "Show it to the crew", "Crash it on the first corner"] },
+  { "template": "gru", "text": ["Plan the perfect heist", "Get the whole crew ready", "Everything goes smoothly", "Someone honks the horn by accident"] },
+
+  { "template": "pigeon", "text": ["Me", "Any random countdown", "Is this a GTA 6 trailer?"], "phase": "pre" },
+  { "template": "pigeon", "text": ["GTA fans", "A random number in the sky", "Is this a GTA 6 hint?"], "phase": "pre" },
+  { "template": "pigeon", "text": ["Me in Leonida", "A swamp with an alligator", "Is this a good swimming spot?"] },
+
+  { "template": "rollsafe", "text": ["Can't get bored waiting for GTA 6", "If you replay GTA 5 for the 12th time"], "phase": "pre" },
+  { "template": "rollsafe", "text": ["Can't lose your car", "If you never leave the garage"] },
+  { "template": "rollsafe", "text": ["Can't miss the mission", "If you never start the mission"] },
+
+  { "template": "buzz", "text": ["Leaks", "Leaks everywhere"], "phase": "pre" },
+  { "template": "buzz", "text": ["Florida Man", "Florida Man everywhere"] },
+  { "template": "buzz", "text": ["Neon lights", "Neon lights everywhere"] },
+
+  { "template": "astronaut", "text": ["Wait, GTA 6 is set in Florida?", "Always has been", "Vice City", "Since 2002"] },
+
+  { "template": "mordor", "text": ["One does not simply", "drive in Vice City without hitting a palm tree"] },
+  { "template": "mordor", "text": ["One does not simply", "wait 13 years for one game"], "phase": "pre" },
+  { "template": "mordor", "text": ["One does not simply", "walk past an Ammu-Nation sale"] },
+
+  { "template": "aag", "text": ["The release date", "Rockstar"], "phase": "pre" },
+  { "template": "aag", "text": ["Who built the Vice City skyline?", "Rockstar"] },
+
+  { "template": "harold", "text": ["When your friend says GTA 6 is \"just another game\"", "Sure, buddy"] },
+  { "template": "harold", "text": ["Says \"just one more mission\"", "It's 4 AM"] },
+
+  { "template": "cmm", "text": ["The beach car chase is the best part of GTA 6. Change my mind."] },
+  { "template": "cmm", "text": ["Vice City sunsets are the real main character. Change my mind."] },
+
+  { "template": "stonks", "text": ["Selling my old games", "To buy GTA 6"], "phase": "pre" },
+  { "template": "stonks", "text": ["Steal a car worth 50K", "Sell it for 5K"] },
+
+  { "template": "panik-kalm-panik", "text": ["GTA 6 got delayed", "It's only one more year", "That was in 2025"], "phase": "pre" },
+  { "template": "panik-kalm-panik", "text": ["Police are behind me", "I found a pay and spray", "It's closed"] },
+
+  { "template": "spongebob", "text": ["\"GTA 6 is just a map with cars\"", "\"gTa 6 Is JuSt A mAp WiTh CaRs\""] },
+
+  { "template": "both", "text": ["Lucia or Jason?", "Why not both?"] },
+  { "template": "both", "text": ["Day drive or night drive?", "Why not both?"] },
+
+  { "template": "fry", "text": ["Not sure if that NPC is real", "Or just better than my real neighbors"] },
+  { "template": "fry", "text": ["Not sure if I'm hyped", "Or just tired of waiting"], "phase": "pre" },
+
+  { "template": "gb", "text": ["Watching the trailer", "Watching the trailer frame by frame", "Counting every palm tree", "Mapping Leonida from car reflections"] },
+
+  { "template": "success", "text": ["Escaped a 5 star wanted level", "Without a single scratch"] },
+  { "template": "success", "text": ["Survived 13 years of waiting", "Still sane. Mostly."], "phase": "post" },
+
+  { "template": "interesting", "text": ["I don't always drive slow", "But when I do, it's for the sunset photo"] },
+
+  { "template": "handshake", "text": ["GTA 5 players", "GTA 6 players", "Respecting the Vice City sunset"] },
+  { "template": "handshake", "text": ["Vice City 2002 fans", "New GTA fans", "Hyped for Leonida"] },
+
+  { "template": "ds", "text": ["Do the main story", "Drive around doing nothing", "Me in GTA 6"] },
+  { "template": "ds", "text": ["Sleep", "Just one more mission", "Every GTA player at 2 AM"] },
+
+  { "template": "db", "text": ["The new GTA 6 map", "Me", "My unfinished GTA 5 save"] },
+  { "template": "db", "text": ["A random side activity", "Me", "The actual mission"] }
+]
