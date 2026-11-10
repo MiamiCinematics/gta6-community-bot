@@ -429,7 +429,8 @@ async function dailyDiscussion(channels) {
     if (t.date === berlinNow().date && t.discussion?.title) topic = t.discussion;
   }
   topic ??= pickOne(discussions, "usedDiscussions");
-  const text = config.messages.discussion
+  const variants = [].concat(config.messages.discussion);
+  const text = variants[Math.floor(Math.random() * variants.length)]
     .replaceAll("{title}", topic.title)
     .replaceAll("{text}", topic.text)
     + (topic.source ? `\nSource: ${topic.source}` : "");
@@ -440,7 +441,7 @@ async function dailyDiscussion(channels) {
     // Forum-Channel: jedes Thema wird ein eigener Forum-Beitrag
     await discord("POST", `/channels/${ch}/threads`, {
       name: topic.title.slice(0, 100), auto_archive_duration: 1440,
-      message: { content: text.replace("in the thread below", "below") },
+      message: { content: text.replace("in the thread", "below").replace("the thread", "the replies").replace("Thread's open", "Replies are open") },
     });
   } else {
     const msg = await sendMessage(ch, { content: text });

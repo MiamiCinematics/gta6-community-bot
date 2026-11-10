@@ -55,7 +55,11 @@
       "Welcome aboard, {user}! Grab a seat, share your best clips and enjoy the ride."
     ],
     "welcomeMany": "Welcome to the GTA 6 Community, {users}! Vice City just got a lot busier.",
-    "discussion": "**Topic of the day: {title}**\n{text}\n\nDrop your thoughts in the thread below. Speculation is welcome, but no leaked material, please.",
+    "discussion": [
+      "**{title}**\n{text}\n\nLet's talk about it in the thread. Leaks, theories, wild guesses, everything goes.",
+      "**{title}**\n{text}\n\nJump in the thread and tell me what you think. Got a leak or a crazy theory? Even better.",
+      "**{title}**\n{text}\n\nThread's open, let's hear it. Theories, leaks, hot takes, bring it on."
+    ],
     "clipCall": "**Weekly Clip Call**\nGot a crazy, funny or cinematic GTA moment from this week? Post it right here in this channel or send it through the form: https://forms.gle/42hLVhiQL14X5HaP7\nThe best clips may be featured in a Miami Cinematics Community Clips video.",
     "milestone": "**We just hit {count} members!** Thanks for being part of the GTA 6 Community. Invite your crew and let's keep growing."
   }
