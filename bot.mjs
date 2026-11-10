@@ -32,6 +32,7 @@ state.feeds ??= {};
 state.usedMemes ??= [];
 state.recentYt ??= [];
 state.pending ??= [];
+state.outbox ??= [];
 
 const log = (...a) => console.log(new Date().toISOString(), ...a);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -94,13 +95,21 @@ async function findGuild() {
 function pickChannel(channels, role) {
   const id = config.channelIds?.[role];
   if (id) return id;
-  const text = channels.filter((c) => c.type === 0 || c.type === 5);
+  // 0 = Text, 5 = Ankuendigung, 15 = Forum
+  const text = channels.filter((c) => c.type === 0 || c.type === 5 || c.type === 15);
   for (const kw of config.channels[role] ?? []) {
     const hit = text.find((c) => c.name.toLowerCase().includes(kw.toLowerCase()));
     if (hit) return hit.id;
   }
+  log(`Kein Channel fuer "${role}". Vorhandene Channels:`, channels.map((c) => `${c.name} (Typ ${c.type})`).join(", "));
   return null;
 }
+const channelType = (channels, id) => channels.find((c) => c.id === id)?.type;
+
+// Hoechstens ein geplanter Post pro Lauf, damit nicht alles gleichzeitig kommt
+let postsLeft = 1;
+const canPost = () => postsLeft > 0;
+const usePost = () => { postsLeft--; };
 
 // ---------------------------------------------------------------- Feeds
 
@@ -131,6 +140,8 @@ function parseFeed(xml) {
 const isYouTube = (feed) => /youtube/i.test(feed.platform);
 
 // Titel vergleichen ohne Hashtags, Links, Emojis und Gross/Klein; aehnlich = mind. halbe Wortueberschneidung
+// Woerter, die in fast jedem GTA-Titel stehen, zaehlen nicht
+const STOP = new Set(["grand", "theft", "auto", "gta", "gta6", "the", "and", "you", "your", "for", "with", "this", "that", "now", "new", "are", "was", "has", "have"]);
 function words(t = "") {
   return new Set(
     t.toLowerCase()
@@ -138,7 +149,7 @@ function words(t = "") {
       .replace(/#\w+/g, " ")
       .replace(/[^\p{L}\p{N}\s]/gu, " ")
       .split(/\s+/)
-      .filter((w) => w.length > 2)
+      .filter((w) => w.length > 2 && !STOP.has(w))
   );
 }
 function similar(a, b) {
@@ -155,6 +166,9 @@ if (process.argv.includes("--selftest")) {
     ["GTA 6 Preload Is Live🔥Is Your Console Ready?  #gta6 #gta #shorts", "Preload is live! Is your console ready? #gta6", true],
     ["Grand Theft Auto VI Launch Trailer", "Pre-orders for the Collector's Edition are now open", false],
     ["A Night in Vice City", "GTA 6 is coming #gta", false],
+    ["Grand Theft Auto VI: Pre-Load Now", "Grand Theft Auto VI: Pre-Load Now", true],
+    ["Grand Theft Auto VI: The Festival", "Grand Theft Auto VI: Pre-Load Now", false],
+    ["Grand Theft Auto VI Launch Trailer", "Grand Theft Auto VI: Trailer 2", false],
   ];
   for (const [a, b, want] of cases) console.log(similar(a, b) === want ? "OK  " : "FAIL", a, "|", b);
   process.exit(0);
@@ -189,6 +203,9 @@ async function checkFeeds(channels) {
     const fresh = items.filter((i) => !seen.includes(i.id)).slice(0, 3).reverse();
     for (const item of fresh) {
       if (isYouTube(feed)) {
+        // Gleicher Titel vom selben Account in den letzten 2 Tagen (z. B. Video + Short) -> nur einmal posten
+        const twin = state.recentYt.find((y) => y.name === feed.name && Date.now() - y.at < 2 * 86400000 && similar(y.title, item.title));
+        if (twin) { log(`Uebersprungen (gleicher Titel schon gepostet): ${feed.name} - ${item.title}`); continue; }
         posts.push({ feed, item });
         state.recentYt.push({ name: feed.name, title: item.title, at: Date.now() });
       } else {
@@ -212,6 +229,7 @@ async function checkFeeds(channels) {
   }
   state.pending = keep;
 
+  // Neue Posts in die Warteschlange; pro Lauf geht hoechstens ein Post raus (nach und nach)
   for (const { feed, item } of posts) {
     const text = (feed.type === "own" ? config.messages.own : config.messages.rockstar)
       .replaceAll("{name}", feed.name)
@@ -219,11 +237,19 @@ async function checkFeeds(channels) {
       .replaceAll("{title}", item.title || "New post")
       .replaceAll("{link}", item.link);
     if (DRY) { log("[dry] wuerde posten:\n" + text); continue; }
-    const ch = pickChannel(channels, feed.type);
-    if (!ch) { log(`Kein Channel fuer "${feed.type}" gefunden, Post uebersprungen.`); continue; }
-    await sendMessage(ch, { content: text });
-    log(`Gepostet: ${feed.name} - ${item.title}`);
+    state.outbox.push({ type: feed.type, text, label: `${feed.name} - ${item.title}` });
   }
+  if (DRY || !state.outbox.length || !canPost()) return;
+  const next = state.outbox[0];
+  const ch = pickChannel(channels, next.type);
+  if (ch) {
+    await sendMessage(ch, { content: next.text });
+    usePost();
+    log(`Gepostet: ${next.label}` + (state.outbox.length > 1 ? ` (noch ${state.outbox.length - 1} in der Warteschlange)` : ""));
+  } else {
+    log(`Kein Channel fuer "${next.type}" gefunden, Post uebersprungen.`);
+  }
+  state.outbox.shift();
 }
 
 // ---------------------------------------------------------------- Begruessung
@@ -339,11 +365,27 @@ async function renderMeme(meme) {
   return Buffer.from(await img.arrayBuffer());
 }
 
+// Memes einzeln ueber den Tag verteilt (config.memeHours, z. B. 12, 16, 20 Uhr)
 async function dailyMemes(channels) {
+  if (TEST_MEMES || DRY) return testMemes();
   const { date, hour } = berlinNow();
-  const due = TEST_MEMES || (state.memeDate !== date && hour >= config.memeHour);
-  if (!due) return;
-  const memes = pickMemes(config.memesPerDay);
+  if (state.memeDay?.date !== date) {
+    if (state.memeDate === date) return; // heute schon nach altem Ablauf gepostet
+    state.memeDay = { date, memes: pickMemes(config.memeHours.length), posted: 0 };
+  }
+  const day = state.memeDay;
+  if (day.posted >= day.memes.length || hour < config.memeHours[day.posted] || !canPost()) return;
+  const ch = pickChannel(channels, "memes");
+  if (!ch) return;
+  const m = day.memes[day.posted];
+  await sendImage(ch, config.messages.memeHeader, await renderMeme(m), `gta6_meme_${date}_${day.posted + 1}.png`);
+  usePost();
+  day.posted++;
+  log(`Meme ${day.posted}/${day.memes.length} gepostet.`);
+}
+
+async function testMemes() {
+  const memes = pickMemes(config.memeHours.length);
 
   if (TEST_MEMES) {
     await mkdir(join(DIR, "test-output"), { recursive: true });
@@ -353,23 +395,13 @@ async function dailyMemes(channels) {
     }
     return;
   }
-  if (DRY) { memes.forEach((m) => log("[dry] Meme:", m.template, m.text.join(" | "))); return; }
-
-  const ch = pickChannel(channels, "memes");
-  if (!ch) { log("Kein Memes-Channel gefunden."); return; }
-  for (const [i, m] of memes.entries()) {
-    const buf = await renderMeme(m);
-    await sendImage(ch, i === 0 ? config.messages.memeHeader : "", buf, `gta6_meme_${date}_${i + 1}.png`);
-    await sleep(1500);
-  }
-  state.memeDate = date;
-  log(`${memes.length} Memes gepostet.`);
+  memes.forEach((m, i) => log(`[dry] Meme um ${config.memeHours[i]} Uhr:`, m.template, m.text.join(" | ")));
 }
 
 // ---------------------------------------------------------------- Umfrage, Diskussion, Clips, Meilensteine
 
 async function dailyPoll(channels) {
-  if (!DRY && !due("poll")) return;
+  if (!DRY && (!due("poll") || !canPost())) return;
   const p = pickOne(polls, "usedPolls");
   if (DRY) { log("[dry] Umfrage:", p.q, "|", p.a.join(" / ")); return; }
   const ch = pickChannel(channels, "welcome");
@@ -383,12 +415,13 @@ async function dailyPoll(channels) {
     },
   });
   markDone("poll");
+  usePost();
   log("Umfrage gepostet:", p.q);
 }
 
 // Thema des Tages: aus today.json (z. B. von der Tagesanalyse), sonst aus discussions.json
 async function dailyDiscussion(channels) {
-  if (!DRY && !due("discussion")) return;
+  if (!DRY && (!due("discussion") || !canPost())) return;
   let topic;
   const todayFile = join(DIR, "today.json");
   if (existsSync(todayFile)) {
@@ -402,27 +435,37 @@ async function dailyDiscussion(channels) {
     + (topic.source ? `\nSource: ${topic.source}` : "");
   if (DRY) { log("[dry] Diskussion:\n" + text); return; }
   const ch = pickChannel(channels, "discussion");
-  if (!ch) { log("Kein Leaks-and-Speculations-Channel gefunden."); return; }
-  const msg = await sendMessage(ch, { content: text });
-  try {
-    await discord("POST", `/channels/${ch}/messages/${msg.id}/threads`, {
+  if (!ch) return;
+  if (channelType(channels, ch) === 15) {
+    // Forum-Channel: jedes Thema wird ein eigener Forum-Beitrag
+    await discord("POST", `/channels/${ch}/threads`, {
       name: topic.title.slice(0, 100), auto_archive_duration: 1440,
+      message: { content: text.replace("in the thread below", "below") },
     });
-  } catch (e) {
-    log("Thread konnte nicht erstellt werden (Recht 'Create Public Threads' fehlt?):", e.status);
+  } else {
+    const msg = await sendMessage(ch, { content: text });
+    try {
+      await discord("POST", `/channels/${ch}/messages/${msg.id}/threads`, {
+        name: topic.title.slice(0, 100), auto_archive_duration: 1440,
+      });
+    } catch (e) {
+      log("Thread konnte nicht erstellt werden (Recht 'Create Public Threads' fehlt?):", e.status);
+    }
   }
   markDone("discussion");
+  usePost();
   log("Diskussion gestartet:", topic.title);
 }
 
 async function weeklyClipCall(channels) {
-  if (!DRY && !due("clipCall")) return;
+  if (!DRY && (!due("clipCall") || !canPost())) return;
   const text = config.messages.clipCall;
   if (DRY) { log("[dry] Clip-Aufruf:\n" + text); return; }
   const ch = pickChannel(channels, "clips");
   if (!ch) { log("Kein Clips-Channel gefunden."); return; }
   await sendMessage(ch, { content: text });
   markDone("clipCall");
+  usePost();
   log("Clip-Aufruf gepostet.");
 }
 
@@ -431,11 +474,12 @@ async function milestones(guildId, channels) {
   const count = g.approximate_member_count ?? 0;
   const reached = config.milestones.filter((m) => count >= m).pop() ?? 0;
   if (state.lastMilestone === undefined) { state.lastMilestone = reached; return; } // erster Lauf: nur merken
-  if (reached <= state.lastMilestone) return;
+  if (reached <= state.lastMilestone || !canPost()) return;
   const ch = pickChannel(channels, "welcome");
   if (!ch) return;
   await sendMessage(ch, { content: config.messages.milestone.replaceAll("{count}", reached.toLocaleString("en-US")) });
   state.lastMilestone = reached;
+  usePost();
   log("Meilenstein gepostet:", reached);
 }
 

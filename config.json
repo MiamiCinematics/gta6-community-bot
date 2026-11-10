@@ -1,8 +1,7 @@
 {
   "guildId": "",
   "timezone": "Europe/Berlin",
-  "memeHour": 12,
-  "memesPerDay": 3,
+  "memeHours": [12, 16, 20],
   "releaseDate": "2026-11-19",
   "holdMinutes": 60,
 

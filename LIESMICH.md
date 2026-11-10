@@ -6,7 +6,7 @@ Läuft komplett auf GitHub (GitHub Actions), dein PC kann aus sein. GitHub start
 |---|---|---|
 | Rockstar-Posts | YouTube-Feed von Rockstar Games | spätestens ca. 15–30 Min. nach dem Post |
 | Deine Posts | YouTube-Feed von Miami Cinematics | spätestens ca. 15–30 Min. nach dem Post |
-| 3 Memes pro Tag | Texte aus `memes.json`, Bild über memegen.link (kostenlos) | ab 12 Uhr deutscher Zeit, einmal täglich |
+| 3 Memes pro Tag | einzeln, Texte aus `memes.json`, Bild über memegen.link (kostenlos) | 12, 16 und 20 Uhr (`memeHours`) |
 | Begrüßung | neue Mitglieder im General-Chat | spätestens ca. 15–30 Min. nach dem Beitritt |
 | Umfrage des Tages | Discord-Umfrage im General-Chat (24 h), Fragen aus `polls.json` | ab 10 Uhr |
 | Thema des Tages | Post + Thread im Leaks-and-Speculations-Channel, aus `today.json` (wenn für heute vorhanden) sonst `discussions.json` | ab 15 Uhr |
@@ -19,6 +19,8 @@ Zusätzliche Rechte für den Bot (Servereinstellungen → Rollen → Bot-Rolle):
 ```json
 { "date": "2026-11-11", "discussion": { "title": "…", "text": "…", "source": "Rockstar Newswire" } }
 ```
+
+Pro Lauf (alle 15 Min.) geht höchstens ein geplanter Post raus, damit nicht alles gleichzeitig kommt; der Rest folgt in den nächsten Läufen. Gleich betitelte Videos desselben Accounts (z. B. Video + Short) werden nur einmal gepostet.
 
 Alle Texte, die im Discord erscheinen, sind auf Englisch und stehen in `config.json` unter `messages`.
 
