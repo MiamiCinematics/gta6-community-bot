@@ -1,1 +1,45 @@
-{}
+{
+  "feeds": {
+    "https://www.youtube.com/feeds/videos.xml?channel_id=UC6VcWc1rAoWdBCM0JxrRQ3A": [
+      "AvBcfBrBl60",
+      "Rj2Jnbt-5p4",
+      "rz1B4B2yBZY",
+      "icy-lhqJhMQ",
+      "MJOrsRRa9GM",
+      "53C6gUqRpK4",
+      "mAfR_ybf5WM",
+      "L-9NI3mHZVo",
+      "GVTE_MuInQg",
+      "Xzxv75FjMJk",
+      "tJbzMqJGH4k",
+      "YmzCydc4qOk",
+      "qq76pQsI1iw",
+      "9CCRgtEcLHU",
+      "vK_IL6V17Js"
+    ],
+    "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "LtrpO8hdVPE",
+      "Tqz_Xz6ckwI",
+      "uFwRRPSvoO0",
+      "0PbBCKhotbs",
+      "ohKB7SVlC1g",
+      "pWmX0sSASlc",
+      "W85nNeMgeI8",
+      "iUSFx0GeXGc",
+      "meZ26Jvf0zo",
+      "PgM1h9ASxgQ",
+      "CwCHmL6PGsY",
+      "kOQP5swCXME",
+      "4Rf76u6ebNI",
+      "ZSW07mkJo0w",
+      "P1yGjOm3WKY"
+    ]
+  },
+  "usedMemes": [
+    31,
+    8,
+    45
+  ],
+  "lastMemberCheck": "2026-11-10T13:36:52.554Z",
+  "memeDate": "2026-11-10"
+}
