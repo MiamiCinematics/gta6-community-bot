@@ -1,6 +1,8 @@
 {
   "feeds": {
     "https://www.youtube.com/feeds/videos.xml?channel_id=UC6VcWc1rAoWdBCM0JxrRQ3A": [
+      "_yl5ELcmugI",
+      "TIPlpDAsfWo",
       "AvBcfBrBl60",
       "Rj2Jnbt-5p4",
       "rz1B4B2yBZY",
@@ -40,6 +42,29 @@
     8,
     45
   ],
-  "lastMemberCheck": "2026-11-10T13:36:52.554Z",
-  "memeDate": "2026-11-10"
+  "lastMemberCheck": "2026-11-10T14:27:07.031Z",
+  "memeDate": "2026-11-10",
+  "recentYt": [
+    {
+      "name": "Rockstar Games",
+      "title": "Grand Theft Auto VI: Pre-Load Now",
+      "at": 1794320826115
+    },
+    {
+      "name": "Rockstar Games",
+      "title": "Grand Theft Auto VI: Pre-Load Now",
+      "at": 1794320826115
+    }
+  ],
+  "pending": [],
+  "jobs": {
+    "poll": "2026-11-10"
+  },
+  "usedPolls": [
+    29
+  ],
+  "usedDiscussions": [
+    18
+  ],
+  "lastMilestone": 0
 }
