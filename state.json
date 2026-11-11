@@ -46,7 +46,7 @@
     10,
     3
   ],
-  "lastMemberCheck": "2026-11-11T08:38:23.360Z",
+  "lastMemberCheck": "2026-11-11T09:35:19.902Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -67,11 +67,12 @@
   ],
   "pending": [],
   "jobs": {
-    "poll": "2026-11-10",
+    "poll": "2026-11-11",
     "discussion": "2026-11-10"
   },
   "usedPolls": [
-    29
+    29,
+    26
   ],
   "usedDiscussions": [
     18,
