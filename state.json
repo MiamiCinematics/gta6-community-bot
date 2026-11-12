@@ -20,6 +20,7 @@
       "vK_IL6V17Js"
     ],
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "lockr5UfK5w",
       "QXphG5NqcJo",
       "ykajl5du8FQ",
       "LtrpO8hdVPE",
@@ -48,9 +49,12 @@
     3,
     2,
     22,
-    46
+    46,
+    7,
+    21,
+    5
   ],
-  "lastMemberCheck": "2026-11-12T22:54:47.087Z",
+  "lastMemberCheck": "2026-11-12T23:29:27.753Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -72,6 +76,11 @@
       "name": "Miami Cinematics",
       "title": "The Last Day of GTA 5: What Happens to GTA Online?",
       "at": 1794515259715
+    },
+    {
+      "name": "Miami Cinematics",
+      "title": "7 DAYS LEFT UNTIL GTA 6 🔥 Are you ready? #gta6 #gta #shorts",
+      "at": 1794526167574
     }
   ],
   "pending": [],
@@ -101,34 +110,41 @@
       "type": "own",
       "text": "**New from Miami Cinematics on YouTube!**\nThe Last Day of GTA 5: What Happens to GTA Online?\nhttps://www.youtube.com/watch?v=QXphG5NqcJo",
       "label": "Miami Cinematics - The Last Day of GTA 5: What Happens to GTA Online?"
+    },
+    {
+      "type": "own",
+      "text": "**New from Miami Cinematics on YouTube!**\n7 DAYS LEFT UNTIL GTA 6 🔥 Are you ready? #gta6 #gta #shorts\nhttps://www.youtube.com/shorts/lockr5UfK5w",
+      "label": "Miami Cinematics - 7 DAYS LEFT UNTIL GTA 6 🔥 Are you ready? #gta6 #gta #shorts"
     }
   ],
   "memeDay": {
-    "date": "2026-11-12",
+    "date": "2026-11-13",
     "memes": [
       {
-        "template": "drake",
+        "template": "gru",
         "text": [
-          "Following the mission marker",
-          "Driving around Vice City for three hours first"
+          "Wait for GTA 6 since 2013",
+          "Get a new console for it",
+          "Clear the whole weekend",
+          "Fall asleep in the loading screen"
         ]
       },
       {
         "template": "mordor",
         "text": [
           "One does not simply",
-          "walk past an Ammu-Nation sale"
-        ]
+          "wait 13 years for one game"
+        ],
+        "phase": "pre"
       },
       {
-        "template": "db",
+        "template": "fine",
         "text": [
-          "The new GTA 6 map",
-          "Me",
-          "My unfinished GTA 5 save"
+          "Wanted level: 5 stars",
+          "This is fine"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
