@@ -52,9 +52,12 @@
     46,
     7,
     21,
-    5
+    5,
+    29,
+    19,
+    33
   ],
-  "lastMemberCheck": "2026-11-13T22:24:47.201Z",
+  "lastMemberCheck": "2026-11-13T23:06:17.379Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -105,33 +108,33 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-13",
+    "date": "2026-11-14",
     "memes": [
       {
-        "template": "gru",
+        "template": "stonks",
         "text": [
-          "Wait for GTA 6 since 2013",
-          "Get a new console for it",
-          "Clear the whole weekend",
-          "Fall asleep in the loading screen"
-        ]
-      },
-      {
-        "template": "mordor",
-        "text": [
-          "One does not simply",
-          "wait 13 years for one game"
+          "Selling my old games",
+          "To buy GTA 6"
         ],
         "phase": "pre"
       },
       {
-        "template": "fine",
+        "template": "astronaut",
         "text": [
-          "Wanted level: 5 stars",
-          "This is fine"
+          "Wait, GTA 6 is set in Florida?",
+          "Always has been",
+          "Vice City",
+          "Since 2002"
+        ]
+      },
+      {
+        "template": "spongebob",
+        "text": [
+          "\"GTA 6 is just a map with cars\"",
+          "\"gTa 6 Is JuSt A mAp WiTh CaRs\""
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
