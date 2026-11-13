@@ -96,8 +96,8 @@ async function findGuild() {
 function pickChannels(channels, role) {
   const ids = [];
   if (config.channelIds?.[role]) ids.push(config.channelIds[role]);
-  // 0 = Text, 5 = Ankuendigung, 15 = Forum
-  const text = channels.filter((c) => c.type === 0 || c.type === 5 || c.type === 15);
+  // 0 = Text, 5 = Ankuendigung, 15 = Forum (Forum nur fuers Thema des Tages)
+  const text = channels.filter((c) => c.type === 0 || c.type === 5 || (c.type === 15 && role === "discussion"));
   for (const kw of config.channels[role] ?? []) {
     for (const c of text) if (c.name.toLowerCase().includes(kw.toLowerCase()) && !ids.includes(c.id)) ids.push(c.id);
   }
@@ -258,8 +258,8 @@ async function checkFeeds(channels) {
       log(`Gepostet in #${channelName(channels, ch)}: ${next.label}` + (state.outbox.length ? ` (noch ${state.outbox.length} in der Warteschlange)` : ""));
       break;
     } catch (e) {
-      if (e.status !== 403) throw e;
-      log(`Keine Schreibrechte in #${channelName(channels, ch)}, versuche naechsten Channel.`);
+      if (e.status !== 403 && e.status !== 400) throw e;
+      log(`Kann nicht in #${channelName(channels, ch)} schreiben (${e.status}), versuche naechsten Channel.`);
     }
   }
   if (!sent) log(`::warning::Kein beschreibbarer Channel fuer "${next.type}", Post uebersprungen: ${next.label}`);
@@ -527,7 +527,7 @@ async function main() {
   for (const [name, fn] of steps) {
     try { await fn(); } catch (e) {
       // Fehlende Discord-Rechte nur als Warnung (keine Fehler-Mail von GitHub), alles andere als Fehler
-      if (e.status === 403) { log(`::warning::Fehlende Rechte bei ${name}:`, e.message); continue; }
+      if (e.status === 403 || e.status === 400) { log(`::warning::Discord lehnt ab bei ${name}:`, e.message); continue; }
       failed = true; log(`Fehler bei ${name}:`, e.message);
     }
   }
