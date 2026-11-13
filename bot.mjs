@@ -92,19 +92,24 @@ async function findGuild() {
 }
 
 // Channel per ID (config.channelIds) oder per Namens-Stichwort (config.channels) finden
-function pickChannel(channels, role) {
-  const id = config.channelIds?.[role];
-  if (id) return id;
+// Alle passenden Channels in Reihenfolge der Stichwoerter (zum Ausweichen bei fehlenden Rechten)
+function pickChannels(channels, role) {
+  const ids = [];
+  if (config.channelIds?.[role]) ids.push(config.channelIds[role]);
   // 0 = Text, 5 = Ankuendigung, 15 = Forum
   const text = channels.filter((c) => c.type === 0 || c.type === 5 || c.type === 15);
   for (const kw of config.channels[role] ?? []) {
-    const hit = text.find((c) => c.name.toLowerCase().includes(kw.toLowerCase()));
-    if (hit) return hit.id;
+    for (const c of text) if (c.name.toLowerCase().includes(kw.toLowerCase()) && !ids.includes(c.id)) ids.push(c.id);
   }
-  log(`Kein Channel fuer "${role}". Vorhandene Channels:`, channels.map((c) => `${c.name} (Typ ${c.type})`).join(", "));
-  return null;
+  return ids;
+}
+function pickChannel(channels, role) {
+  const id = pickChannels(channels, role)[0];
+  if (!id) log(`Kein Channel fuer "${role}". Vorhandene Channels:`, channels.map((c) => `${c.name} (Typ ${c.type})`).join(", "));
+  return id ?? null;
 }
 const channelType = (channels, id) => channels.find((c) => c.id === id)?.type;
+const channelName = (channels, id) => channels.find((c) => c.id === id)?.name ?? id;
 
 // Hoechstens ein geplanter Post pro Lauf, damit nicht alles gleichzeitig kommt
 let postsLeft = 1;
@@ -237,19 +242,27 @@ async function checkFeeds(channels) {
       .replaceAll("{title}", item.title || "New post")
       .replaceAll("{link}", item.link);
     if (DRY) { log("[dry] wuerde posten:\n" + text); continue; }
-    state.outbox.push({ type: feed.type, text, label: `${feed.name} - ${item.title}` });
+    state.outbox.push({ type: feed.type, text, label: `${feed.name} - ${item.title}`, at: Date.now() });
   }
+  // Was laenger als 1 Tag in der Warteschlange steckt, ist veraltet und faellt weg
+  state.outbox = state.outbox.filter((o) => !o.at || Date.now() - o.at < 86400000);
   if (DRY || !state.outbox.length || !canPost()) return;
-  const next = state.outbox[0];
-  const ch = pickChannel(channels, next.type);
-  if (ch) {
-    await sendMessage(ch, { content: next.text });
-    usePost();
-    log(`Gepostet: ${next.label}` + (state.outbox.length > 1 ? ` (noch ${state.outbox.length - 1} in der Warteschlange)` : ""));
-  } else {
-    log(`Kein Channel fuer "${next.type}" gefunden, Post uebersprungen.`);
+  // Der Post wird in jedem Fall aus der Warteschlange genommen, damit nichts haengen bleibt
+  const next = state.outbox.shift();
+  let sent = false;
+  for (const ch of pickChannels(channels, next.type)) {
+    try {
+      await sendMessage(ch, { content: next.text });
+      sent = true;
+      usePost();
+      log(`Gepostet in #${channelName(channels, ch)}: ${next.label}` + (state.outbox.length ? ` (noch ${state.outbox.length} in der Warteschlange)` : ""));
+      break;
+    } catch (e) {
+      if (e.status !== 403) throw e;
+      log(`Keine Schreibrechte in #${channelName(channels, ch)}, versuche naechsten Channel.`);
+    }
   }
-  state.outbox.shift();
+  if (!sent) log(`::warning::Kein beschreibbarer Channel fuer "${next.type}", Post uebersprungen: ${next.label}`);
 }
 
 // ---------------------------------------------------------------- Begruessung
@@ -512,7 +525,11 @@ async function main() {
   ];
   let failed = false;
   for (const [name, fn] of steps) {
-    try { await fn(); } catch (e) { failed = true; log(`Fehler bei ${name}:`, e.message); }
+    try { await fn(); } catch (e) {
+      // Fehlende Discord-Rechte nur als Warnung (keine Fehler-Mail von GitHub), alles andere als Fehler
+      if (e.status === 403) { log(`::warning::Fehlende Rechte bei ${name}:`, e.message); continue; }
+      failed = true; log(`Fehler bei ${name}:`, e.message);
+    }
   }
   await writeFile(STATE_FILE, JSON.stringify(state, null, 2) + "\n");
   if (failed) process.exitCode = 1;
