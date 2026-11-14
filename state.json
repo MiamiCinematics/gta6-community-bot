@@ -55,9 +55,12 @@
     5,
     29,
     19,
-    33
+    33,
+    37,
+    20,
+    35
   ],
-  "lastMemberCheck": "2026-11-14T22:31:48.098Z",
+  "lastMemberCheck": "2026-11-14T23:14:08.450Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -110,33 +113,31 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-14",
+    "date": "2026-11-15",
     "memes": [
       {
-        "template": "stonks",
+        "template": "fry",
         "text": [
-          "Selling my old games",
-          "To buy GTA 6"
+          "Not sure if I'm hyped",
+          "Or just tired of waiting"
         ],
         "phase": "pre"
       },
       {
-        "template": "astronaut",
+        "template": "mordor",
         "text": [
-          "Wait, GTA 6 is set in Florida?",
-          "Always has been",
-          "Vice City",
-          "Since 2002"
+          "One does not simply",
+          "drive in Vice City without hitting a palm tree"
         ]
       },
       {
-        "template": "spongebob",
+        "template": "both",
         "text": [
-          "\"GTA 6 is just a map with cars\"",
-          "\"gTa 6 Is JuSt A mAp WiTh CaRs\""
+          "Day drive or night drive?",
+          "Why not both?"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
