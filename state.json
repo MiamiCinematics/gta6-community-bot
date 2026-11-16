@@ -20,6 +20,7 @@
       "vK_IL6V17Js"
     ],
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "QuuGFFbA0zk",
       "sRBZdvhq7Us",
       "U6-gE_rWv00",
       "d3lrH4QpLe4",
@@ -64,9 +65,12 @@
     35,
     11,
     34,
-    27
+    27,
+    17,
+    25,
+    23
   ],
-  "lastMemberCheck": "2026-11-16T22:56:30.526Z",
+  "lastMemberCheck": "2026-11-16T23:33:37.502Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -138,31 +142,31 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "memes": [
       {
-        "template": "pigeon",
+        "template": "buzz",
         "text": [
-          "GTA fans",
-          "A random number in the sky",
-          "Is this a GTA 6 hint?"
+          "Florida Man",
+          "Florida Man everywhere"
+        ]
+      },
+      {
+        "template": "harold",
+        "text": [
+          "When your friend says GTA 6 is \"just another game\"",
+          "Sure, buddy"
+        ]
+      },
+      {
+        "template": "aag",
+        "text": [
+          "The release date",
+          "Rockstar"
         ],
         "phase": "pre"
-      },
-      {
-        "template": "both",
-        "text": [
-          "Lucia or Jason?",
-          "Why not both?"
-        ]
-      },
-      {
-        "template": "cmm",
-        "text": [
-          "The beach car chase is the best part of GTA 6. Change my mind."
-        ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
