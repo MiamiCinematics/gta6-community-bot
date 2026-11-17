@@ -20,6 +20,7 @@
       "vK_IL6V17Js"
     ],
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "sXP2CvplQqo",
       "TC8_wAB1jwI",
       "QuuGFFbA0zk",
       "sRBZdvhq7Us",
@@ -69,9 +70,12 @@
     27,
     17,
     25,
-    23
+    23,
+    42,
+    32,
+    18
   ],
-  "lastMemberCheck": "2026-11-17T22:24:57.487Z",
+  "lastMemberCheck": "2026-11-17T23:17:42.801Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -103,6 +107,11 @@
       "name": "Miami Cinematics",
       "title": "4 Days Left: The Real Florida Keys Behind Leonida #shorts #gta6 #gtavi #gta #miami",
       "at": 1794786002214
+    },
+    {
+      "name": "Miami Cinematics",
+      "title": "The Last Look at GTA 6 Before Release #short  #gta6  #gta",
+      "at": 1794957462109
     }
   ],
   "pending": [],
@@ -135,31 +144,32 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-17",
+    "date": "2026-11-18",
     "memes": [
+      {
+        "template": "handshake",
+        "text": [
+          "GTA 5 players",
+          "GTA 6 players",
+          "Respecting the Vice City sunset"
+        ]
+      },
+      {
+        "template": "panik-kalm-panik",
+        "text": [
+          "Police are behind me",
+          "I found a pay and spray",
+          "It's closed"
+        ]
+      },
       {
         "template": "buzz",
         "text": [
-          "Florida Man",
-          "Florida Man everywhere"
+          "Neon lights",
+          "Neon lights everywhere"
         ]
-      },
-      {
-        "template": "harold",
-        "text": [
-          "When your friend says GTA 6 is \"just another game\"",
-          "Sure, buddy"
-        ]
-      },
-      {
-        "template": "aag",
-        "text": [
-          "The release date",
-          "Rockstar"
-        ],
-        "phase": "pre"
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
