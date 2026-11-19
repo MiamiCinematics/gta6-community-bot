@@ -78,9 +78,12 @@
     18,
     30,
     9,
-    47
+    47,
+    24,
+    6,
+    36
   ],
-  "lastMemberCheck": "2026-11-19T22:29:22.530Z",
+  "lastMemberCheck": "2026-11-19T23:15:08.840Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -153,33 +156,31 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-19",
+    "date": "2026-11-20",
     "memes": [
       {
-        "template": "stonks",
+        "template": "aag",
         "text": [
-          "Steal a car worth 50K",
-          "Sell it for 5K"
+          "Who built the Vice City skyline?",
+          "Rockstar"
         ]
       },
       {
-        "template": "gru",
+        "template": "fine",
         "text": [
-          "Plan the perfect heist",
-          "Get the whole crew ready",
-          "Everything goes smoothly",
-          "Someone honks the horn by accident"
-        ]
+          "My weekend plans",
+          "Cancelled for GTA 6"
+        ],
+        "phase": "post"
       },
       {
-        "template": "db",
+        "template": "fry",
         "text": [
-          "A random side activity",
-          "Me",
-          "The actual mission"
+          "Not sure if that NPC is real",
+          "Or just better than my real neighbors"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
