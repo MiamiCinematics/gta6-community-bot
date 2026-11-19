@@ -1,6 +1,7 @@
 {
   "feeds": {
     "https://www.youtube.com/feeds/videos.xml?channel_id=UC6VcWc1rAoWdBCM0JxrRQ3A": [
+      "T95WGWkx7P0",
       "_yl5ELcmugI",
       "TIPlpDAsfWo",
       "AvBcfBrBl60",
@@ -78,7 +79,7 @@
     9,
     47
   ],
-  "lastMemberCheck": "2026-11-19T14:10:24.636Z",
+  "lastMemberCheck": "2026-11-19T15:01:43.117Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -110,6 +111,11 @@
       "name": "Miami Cinematics",
       "title": "The Last Look at GTA 6 Before Release #short  #gta6  #gta",
       "at": 1794957462109
+    },
+    {
+      "name": "Rockstar Games",
+      "title": "Grand Theft Auto VI Now Available",
+      "at": 1795100502524
     }
   ],
   "pending": [],
