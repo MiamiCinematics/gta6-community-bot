@@ -89,7 +89,7 @@
     0,
     14
   ],
-  "lastMemberCheck": "2026-11-21T08:29:52.237Z",
+  "lastMemberCheck": "2026-11-21T09:15:42.721Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -140,7 +140,7 @@
   ],
   "pending": [],
   "jobs": {
-    "poll": "2026-11-20",
+    "poll": "2026-11-21",
     "discussion": "2026-11-20",
     "clipCall": "2026-11-20"
   },
@@ -155,7 +155,8 @@
     13,
     0,
     21,
-    18
+    18,
+    9
   ],
   "usedDiscussions": [
     18,
