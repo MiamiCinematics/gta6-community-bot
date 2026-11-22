@@ -21,6 +21,7 @@
       "vK_IL6V17Js"
     ],
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "nksjUIqnAv8",
       "XvMvpFygE40",
       "X0GDo1xOfno",
       "fmDLbP2_VoA",
@@ -92,16 +93,14 @@
     14,
     28,
     40,
-    15
+    15,
+    4,
+    12,
+    41
   ],
-  "lastMemberCheck": "2026-11-22T22:33:45.150Z",
+  "lastMemberCheck": "2026-11-22T23:24:23.486Z",
   "memeDate": "2026-11-10",
   "recentYt": [
-    {
-      "name": "Miami Cinematics",
-      "title": "♪ Vice City, We Are Coming Home",
-      "at": 1794783552904
-    },
     {
       "name": "Miami Cinematics",
       "title": "4 Days Left: The Real Florida Keys Behind Leonida #shorts #gta6 #gtavi #gta #miami",
@@ -146,6 +145,11 @@
       "name": "Miami Cinematics",
       "title": "One Lap Around the Whole GTA 6 Map in Under 18 Min – No GPS, No Crash",
       "at": 1795384426017
+    },
+    {
+      "name": "Miami Cinematics",
+      "title": "Short 4 BetweenTwoCars #gta6 #gta",
+      "at": 1795389863337
     }
   ],
   "pending": [],
@@ -188,30 +192,32 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-22",
+    "date": "2026-11-23",
     "memes": [
       {
-        "template": "cmm",
+        "template": "drake",
         "text": [
-          "Vice City sunsets are the real main character. Change my mind."
-        ]
-      },
-      {
-        "template": "success",
-        "text": [
-          "Survived 13 years of waiting",
-          "Still sane. Mostly."
+          "Sleeping 8 hours",
+          "Sleeping 8 minutes because GTA 6 is out"
         ],
         "phase": "post"
       },
       {
-        "template": "rollsafe",
+        "template": "pigeon",
         "text": [
-          "Can't miss the mission",
-          "If you never start the mission"
+          "Me in Leonida",
+          "A swamp with an alligator",
+          "Is this a good swimming spot?"
+        ]
+      },
+      {
+        "template": "interesting",
+        "text": [
+          "I don't always drive slow",
+          "But when I do, it's for the sunset photo"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
