@@ -55,50 +55,11 @@
     ]
   },
   "usedMemes": [
-    31,
-    8,
-    45,
-    13,
-    10,
-    3,
-    2,
-    22,
-    46,
-    7,
-    21,
-    5,
-    29,
-    19,
-    33,
-    37,
-    20,
-    35,
-    11,
-    34,
-    27,
-    17,
-    25,
-    23,
     42,
     32,
-    18,
-    30,
-    9,
-    47,
-    24,
-    6,
-    36,
-    26,
-    0,
-    14,
-    28,
-    40,
-    15,
-    4,
-    12,
-    41
+    17
   ],
-  "lastMemberCheck": "2026-11-23T22:16:27.555Z",
+  "lastMemberCheck": "2026-11-23T23:17:48.866Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -189,32 +150,32 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-23",
+    "date": "2026-11-24",
     "memes": [
       {
-        "template": "drake",
+        "template": "handshake",
         "text": [
-          "Sleeping 8 hours",
-          "Sleeping 8 minutes because GTA 6 is out"
-        ],
-        "phase": "post"
-      },
-      {
-        "template": "pigeon",
-        "text": [
-          "Me in Leonida",
-          "A swamp with an alligator",
-          "Is this a good swimming spot?"
+          "GTA 5 players",
+          "GTA 6 players",
+          "Respecting the Vice City sunset"
         ]
       },
       {
-        "template": "interesting",
+        "template": "panik-kalm-panik",
         "text": [
-          "I don't always drive slow",
-          "But when I do, it's for the sunset photo"
+          "Police are behind me",
+          "I found a pay and spray",
+          "It's closed"
+        ]
+      },
+      {
+        "template": "buzz",
+        "text": [
+          "Florida Man",
+          "Florida Man everywhere"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
