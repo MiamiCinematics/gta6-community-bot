@@ -21,6 +21,7 @@
       "vK_IL6V17Js"
     ],
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "8zAkQENGR_8",
       "CAVHsefIw94",
       "nksjUIqnAv8",
       "XvMvpFygE40",
@@ -58,16 +59,14 @@
   "usedMemes": [
     42,
     32,
-    17
+    17,
+    30,
+    4,
+    5
   ],
-  "lastMemberCheck": "2026-11-24T22:37:17.855Z",
+  "lastMemberCheck": "2026-11-24T23:29:13.118Z",
   "memeDate": "2026-11-10",
   "recentYt": [
-    {
-      "name": "Miami Cinematics",
-      "title": "The Last Look at GTA 6 Before Release #short  #gta6  #gta",
-      "at": 1794957462109
-    },
     {
       "name": "Rockstar Games",
       "title": "Grand Theft Auto VI Now Available",
@@ -112,6 +111,11 @@
       "name": "Miami Cinematics",
       "title": "GTA 6 NEW SECRET HIDDEN EASTEREGG & Trophy 'The Truth Is Out There'",
       "at": 1795559837204
+    },
+    {
+      "name": "Miami Cinematics",
+      "title": "This GTA 6 (GHOST) Hotel Locked Me Inside  #gta6 #gta #shorts",
+      "at": 1795562952915
     }
   ],
   "pending": [],
@@ -158,32 +162,31 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-24",
+    "date": "2026-11-25",
     "memes": [
       {
-        "template": "handshake",
+        "template": "stonks",
         "text": [
-          "GTA 5 players",
-          "GTA 6 players",
-          "Respecting the Vice City sunset"
+          "Steal a car worth 50K",
+          "Sell it for 5K"
         ]
       },
       {
-        "template": "panik-kalm-panik",
+        "template": "drake",
         "text": [
-          "Police are behind me",
-          "I found a pay and spray",
-          "It's closed"
-        ]
+          "Sleeping 8 hours",
+          "Sleeping 8 minutes because GTA 6 is out"
+        ],
+        "phase": "post"
       },
       {
-        "template": "buzz",
+        "template": "fine",
         "text": [
-          "Florida Man",
-          "Florida Man everywhere"
+          "Wanted level: 5 stars",
+          "This is fine"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
