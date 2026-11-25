@@ -63,9 +63,12 @@
     17,
     30,
     4,
-    5
+    5,
+    35,
+    36,
+    12
   ],
-  "lastMemberCheck": "2026-11-25T22:22:41.092Z",
+  "lastMemberCheck": "2026-11-25T23:18:07.189Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -170,31 +173,31 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "memes": [
       {
-        "template": "stonks",
+        "template": "both",
         "text": [
-          "Steal a car worth 50K",
-          "Sell it for 5K"
+          "Day drive or night drive?",
+          "Why not both?"
         ]
       },
       {
-        "template": "drake",
+        "template": "fry",
         "text": [
-          "Sleeping 8 hours",
-          "Sleeping 8 minutes because GTA 6 is out"
-        ],
-        "phase": "post"
+          "Not sure if that NPC is real",
+          "Or just better than my real neighbors"
+        ]
       },
       {
-        "template": "fine",
+        "template": "pigeon",
         "text": [
-          "Wanted level: 5 stars",
-          "This is fine"
+          "Me in Leonida",
+          "A swamp with an alligator",
+          "Is this a good swimming spot?"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
