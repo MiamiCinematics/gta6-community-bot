@@ -21,6 +21,7 @@
       "vK_IL6V17Js"
     ],
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCormlWEZILv5ekwDv3UMDOQ": [
+      "MOj3QnArU1o",
       "fpvtvznhhgw",
       "Bo1-w5EGOUE",
       "Du_oxga_8P4",
@@ -69,9 +70,12 @@
     5,
     35,
     36,
-    12
+    12,
+    41,
+    45,
+    38
   ],
-  "lastMemberCheck": "2026-11-26T22:35:25.979Z",
+  "lastMemberCheck": "2026-11-26T23:34:14.035Z",
   "memeDate": "2026-11-10",
   "recentYt": [
     {
@@ -133,6 +137,11 @@
       "name": "Miami Cinematics",
       "title": "This Zombie Cat Was Dead in GTA 6… #shorts #gta6 #gta",
       "at": 1795708214037
+    },
+    {
+      "name": "Miami Cinematics",
+      "title": "Don't Drink This in GTA 6 #shorts",
+      "at": 1795736050922
     }
   ],
   "pending": [],
@@ -183,31 +192,33 @@
   "lastMilestone": 0,
   "outbox": [],
   "memeDay": {
-    "date": "2026-11-26",
+    "date": "2026-11-27",
     "memes": [
       {
-        "template": "both",
+        "template": "interesting",
         "text": [
-          "Day drive or night drive?",
-          "Why not both?"
+          "I don't always drive slow",
+          "But when I do, it's for the sunset photo"
         ]
       },
       {
-        "template": "fry",
+        "template": "ds",
         "text": [
-          "Not sure if that NPC is real",
-          "Or just better than my real neighbors"
+          "Sleep",
+          "Just one more mission",
+          "Every GTA player at 2 AM"
         ]
       },
       {
-        "template": "pigeon",
+        "template": "gb",
         "text": [
-          "Me in Leonida",
-          "A swamp with an alligator",
-          "Is this a good swimming spot?"
+          "Watching the trailer",
+          "Watching the trailer frame by frame",
+          "Counting every palm tree",
+          "Mapping Leonida from car reflections"
         ]
       }
     ],
-    "posted": 3
+    "posted": 0
   }
 }
